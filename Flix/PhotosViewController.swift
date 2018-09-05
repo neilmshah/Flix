@@ -29,9 +29,13 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         let task = session.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 print(error.localizedDescription)
+                let alert = UIAlertController(title: "Error", message: "Network/connectivity issue. Please try again.", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true)
             } else if let data = data,
                 let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                //print(dataDictionary)
                 
                 // Get the dictionary from the response key
                 let responseDictionary = dataDictionary["response"] as! [String: Any]
